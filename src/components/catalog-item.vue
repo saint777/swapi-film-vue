@@ -1,17 +1,46 @@
 <template lang="pug">
   .catalog-item
     .catalog-item__image-wrap
-      img.catalog-item__image(src="@/assets/sample.jpg")
+      .catalog-item__loader(v-if="isImageLoading")
+      img(:src="itemImage").catalog-item__image
     .catalog-item__info
       p.catalog-item__title {{ movie.title }}
       p.catalog-item__director {{ movie.director }}
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'catalogItem',
   props: {
     movie: Object,
+  },
+  data() {
+    return {
+      isImageLoading: false,
+      placeholder: 'https://via.placeholder.com/258x84.png?text=Placeholder',
+      itemImage: '',
+    };
+  },
+  methods: {
+    searchImage() {
+      this.isImageLoading = true;
+      const that = this;
+      axios
+        .get(`https://pixabay.com/api/?key=13445987-aabf208eb8d891b48efe137e0&image_type=all&q=${this.movie.title.replace(' ', '+')}`)
+        .then((response) => {
+          if (response.data.hits.length > 0) {
+            that.itemImage = response.data.hits[0].webformatURL;
+          } else {
+            that.itemImage = that.placeholder;
+          }
+          that.isImageLoading = false;
+        });
+    },
+  },
+  created() {
+    this.searchImage();
   },
 };
 </script>
@@ -52,6 +81,18 @@ export default {
     align-items: center;
     height: 84px;
     overflow: hidden;
+    position: relative;
+  }
+
+  &__loader {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url('./../assets/loading-anim.svg');
+    background-size: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
   }
 
   &__title {

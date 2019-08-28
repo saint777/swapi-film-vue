@@ -1,17 +1,13 @@
 <template lang="pug">
   label.searchbar
+    .searchbar__icon
     input(placeholder="Введите название").searchbar__input
-    catalogSearchIcon.searchbar__icon
 </template>
 
 <script>
-import catalogSearchIcon from '../assets/search-icon.svg';
 
 export default {
   name: 'catalog-searchbar',
-  components: {
-    catalogSearchIcon,
-  },
 };
 </script>
 
@@ -47,6 +43,10 @@ export default {
   }
 
   &__icon {
+    width: 15px;
+    height: 16px;
+    background-image: url('./../assets/search-icon.svg');
+    background-repeat: no-repeat;
     position: absolute;
     left: 12px;
     top: 50%;

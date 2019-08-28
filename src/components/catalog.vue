@@ -2,7 +2,7 @@
   .catalog
     .catalog__title-wrap
       h1.catalog__title {{title}}
-      catalogStatusIcon(v-if="isBusy").catalog__status
+      img(src="../assets/loading-anim.svg" v-if="isBusy").catalog__status
     catalogSearchbar.catalog__searchbar
     .catalog__list
       catalog-item(v-for="movie in movies" :movie="movie")
@@ -15,7 +15,6 @@ import axios from 'axios';
 import catalogItem from './catalog-item.vue';
 import catalogSearchbar from './catalog-searchbar.vue';
 import catalogButton from './catalog-btn.vue';
-import catalogStatusIcon from '../assets/loading-anim.svg';
 
 export default {
   name: 'catalog',
@@ -27,7 +26,6 @@ export default {
     catalogItem,
     catalogSearchbar,
     catalogButton,
-    catalogStatusIcon,
   },
   data() {
     return {
@@ -62,8 +60,8 @@ export default {
         for (let i = 0; i < limit; i += 1) {
           this.movies.push(this.jsonData.pop());
         }
-      } else if (jsonSize < limit && jsonSize > 0) {
-        for (let i = 0; i < limit; i += 1) {
+      } else if (jsonSize < limit) {
+        for (let i = 0; i < jsonSize; i += 1) {
           this.movies.push(this.jsonData.pop());
           this.isEnd = true;
         }
