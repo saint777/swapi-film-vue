@@ -2,6 +2,8 @@
 
 Каталог фильмов с поисковой строкой на vue
 
+**Demo** — https://saint777.github.io/swapi-film-vue/
+
 #### Project setup
 ```
 yarn install
