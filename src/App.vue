@@ -12,36 +12,6 @@ export default {
   components: {
     catalog,
   },
-  /* data() {
-    return {
-    movies: [
-      {
-        title: 'Matrix 4',
-        director: 'wtf',
-      },
-      {
-        title: 'John Cena',
-        director: 'direktor svejesti',
-      },
-      {
-        title: 'Kowalski',
-        director: 'rejiser epta',
-      },
-      {
-        title: 'Kowalski',
-        director: 'rejiser epta',
-      },
-      {
-        title: 'Kowalski',
-        director: 'rejiser epta',
-      },
-      {
-        title: 'Kowalski',
-        director: 'rejiser epta',
-      },
-    ],
-    };
-  }, */
 };
 
 </script>

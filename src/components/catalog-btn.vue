@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// Абстрактная синяя кнопка
+// КОтоая по клику выполняет action из пропсов
 export default {
   name: 'catalog-btn',
   props: {

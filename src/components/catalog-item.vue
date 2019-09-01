@@ -15,29 +15,41 @@ export default {
   name: 'catalogItem',
   props: {
     movie: Object,
+    message: String,
   },
   data() {
     return {
       isImageLoading: false,
-      placeholder: 'https://via.placeholder.com/258x84.png?text=Placeholder',
       itemImage: '',
     };
   },
   methods: {
-    searchImage() {
+    searchImage() { // Поиск картинки по pixabay
       this.isImageLoading = true;
       const that = this;
       axios
-        .get(`https://pixabay.com/api/?key=13445987-aabf208eb8d891b48efe137e0&image_type=all&q=${this.movie.title.replace(' ', '+')}`)
+        .get(`https://pixabay.com/api/?key=13445987-aabf208eb8d891b48efe137e0&image_type=all&q=${this.movie.title.replace(' ', '+')}`, { timeout: 10000 })
+        .catch(() => {
+          // В случае ошибки выводим placeholder с сообщение error
+          that.itemImage = 'https://via.placeholder.com/258x84.png?text=ERROR';
+          that.isImageLoading = false;
+        })
         .then((response) => {
+          //  data.hits показывает сколько найдено картино
+          //  Если найдено - то вывести в нашем item
+          //  Если hits==0 то placeholder
+          //  отключаем анимацию загрузки
           if (response.data.hits.length > 0) {
             that.itemImage = response.data.hits[0].webformatURL;
           } else {
-            that.itemImage = that.placeholder;
+            that.itemImage = 'https://via.placeholder.com/258x84.png?text=Placeholder';
           }
           that.isImageLoading = false;
         });
     },
+  },
+  mounted() {
+    this.searchImage();
   },
   created() {
     this.searchImage();
@@ -46,15 +58,6 @@ export default {
 </script>
 
 <style lang="scss">
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .catalog-item {
   box-shadow: 0px 1px 8px rgba(78, 116, 152, 0.2);
   width: 258px;
@@ -62,7 +65,6 @@ export default {
   border-radius: 4px 4px 0px 0px;
   overflow: hidden;
   margin-right: 18px;
-  animation: .4s fadeIn;
 
   &:nth-child(3n) {
     margin-right: 0;
@@ -87,6 +89,7 @@ export default {
   &__loader {
     width: 100%;
     height: 100%;
+    top: 12px;
     position: absolute;
     background-image: url('./../assets/loading-anim.svg');
     background-size: 50px;
