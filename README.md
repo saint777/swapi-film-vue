@@ -2,17 +2,17 @@
 
 Каталог фильмов с поисковой строкой на vue
 
-## Project setup
+#### Project setup
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 yarn run build
 ```
